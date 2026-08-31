@@ -1,0 +1,82 @@
+@model ParmeniaHub.Web.ViewModels.Convocatorias.CrearConvocatoriaViewModel
+@using ParmeniaHub.Domain.Convocatorias
+
+@{
+    ViewData["Title"] = "Nueva convocatoria";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <form asp-action="Crear" method="post" class="card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="header-title">
+                    <h4 class="card-title mb-1">Datos de la convocatoria</h4>
+                    <p class="text-muted mb-0">Se guardará inicialmente como borrador.</p>
+                </div>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Volver</a>
+            </div>
+            <div class="card-body p-4">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Titulo" class="form-label"></label>
+                    <input asp-for="Titulo" class="form-control" />
+                    <span asp-validation-for="Titulo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TipoPrograma" class="form-label"></label>
+                    <select asp-for="TipoPrograma"
+                            asp-items="Html.GetEnumSelectList<TipoPrograma>()"
+                            class="form-select">
+                        <option value="">Selecciona un programa</option>
+                    </select>
+                    <span asp-validation-for="TipoPrograma" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Descripcion" class="form-label"></label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Requisitos" class="form-label"></label>
+                    <textarea asp-for="Requisitos" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Requisitos" class="text-danger"></span>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="InicioInscripciones" class="form-label"></label>
+                        <input asp-for="InicioInscripciones" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="InicioInscripciones" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FinInscripciones" class="form-label"></label>
+                        <input asp-for="FinInscripciones" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="FinInscripciones" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="InicioPrograma" class="form-label"></label>
+                        <input asp-for="InicioPrograma" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="InicioPrograma" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FinPrograma" class="form-label"></label>
+                        <input asp-for="FinPrograma" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="FinPrograma" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end gap-2 p-3">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar borrador</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

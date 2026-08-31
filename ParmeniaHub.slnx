@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ParmeniaHub.Application/ParmeniaHub.Application.csproj" />
+    <Project Path="src/ParmeniaHub.Domain/ParmeniaHub.Domain.csproj" />
+    <Project Path="src/ParmeniaHub.Infrastructure/ParmeniaHub.Infrastructure.csproj" />
+    <Project Path="src/ParmeniaHub.Web/ParmeniaHub.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ParmeniaHub.Application.Tests/ParmeniaHub.Application.Tests.csproj" />
+    <Project Path="tests/ParmeniaHub.Domain.Tests/ParmeniaHub.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

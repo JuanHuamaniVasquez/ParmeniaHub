@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:17-alpine
+    container_name: parmenia-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: parmenia_hub
+      POSTGRES_USER: parmenia
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "54321:5432"
+    volumes:
+      - parmenia_database_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U parmenia -d parmenia_hub"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  parmenia_database_data:

@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Panel principal";
+}
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card h-100" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-body p-4 p-lg-5">
+                <span class="badge bg-primary-subtle text-primary mb-3">Parmenia Hub</span>
+                <h2 class="mb-3">Un espacio para convertir ideas en proyectos viables</h2>
+                <p class="text-muted mb-4">
+                    Centraliza convocatorias, postulaciones, sesiones, entregables y revisiones
+                    de los programas de preincubación e incubación.
+                </p>
+                <a asp-controller="Convocatorias" asp-action="Index" class="btn btn-primary">
+                    Gestionar convocatorias
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card h-100" data-aos="fade-up" data-aos-delay="150">
+            <div class="card-header">
+                <div class="header-title">
+                    <h4 class="card-title mb-1">Avance del MVP</h4>
+                    <p class="text-muted mb-0">Construcción progresiva por módulos.</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <span class="avatar-45 rounded bg-success-subtle text-success d-flex align-items-center justify-content-center fw-bold">1</span>
+                    <div class="ms-3">
+                        <h6 class="mb-1">Convocatorias</h6>
+                        <span class="text-success">Disponible</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-4">
+                    <span class="avatar-45 rounded bg-primary-subtle text-primary d-flex align-items-center justify-content-center fw-bold">2</span>
+                    <div class="ms-3">
+                        <h6 class="mb-1">Equipos y proyectos</h6>
+                        <span class="text-muted">Siguiente módulo</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="avatar-45 rounded bg-info-subtle text-info d-flex align-items-center justify-content-center fw-bold">3</span>
+                    <div class="ms-3">
+                        <h6 class="mb-1">Postulaciones y seguimiento</h6>
+                        <span class="text-muted">Planificado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

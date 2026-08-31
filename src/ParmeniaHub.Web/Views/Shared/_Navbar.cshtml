@@ -1,0 +1,48 @@
+<nav class="nav navbar navbar-expand-xl navbar-light iq-navbar">
+    <div class="container-fluid navbar-inner">
+        <a asp-controller="Home" asp-action="Index" class="navbar-brand d-xl-none">
+            <span class="parmenia-logo parmenia-logo-sm">P</span>
+            <h5 class="logo-title mb-0">Parmenia Hub</h5>
+        </a>
+
+        <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+            <i class="icon">
+                <svg width="20" class="icon-20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path>
+                </svg>
+            </i>
+        </div>
+
+        <div class="d-none d-md-block ms-3">
+            <p class="mb-0 text-muted small">Plataforma de gestión</p>
+            <strong>Incubadora Parmenia</strong>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Abrir navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+                <li class="nav-item dropdown custom-drop">
+                    <a class="py-0 nav-link d-flex align-items-center" href="#"
+                       id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <span class="avatar avatar-45 avatar-rounded bg-primary text-white d-flex align-items-center justify-content-center fw-semibold">
+                            AD
+                        </span>
+                        <div class="caption ms-3 d-none d-md-block">
+                            <h6 class="mb-0 caption-title">Administrador</h6>
+                            <p class="mb-0 caption-sub-title">Encargado de incubadora</p>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><span class="dropdown-item-text text-muted">Autenticación próximamente</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
