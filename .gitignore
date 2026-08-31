@@ -8,6 +8,10 @@ obj/
 .vs/
 .vscode/
 
+## OpenAI workspace files
+.openai/
+openai/
+
 ## Local configuration and secrets
 .env
 appsettings.Development.local.json
