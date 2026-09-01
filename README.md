@@ -2,6 +2,8 @@
 
 ParmeniaHub es una plataforma web pensada para la incubadora de proyectos Parmenia de la universidad.
 
+![alt text](image.png)
+
 La plataforma busca reunir en un solo lugar la información y las actividades de los alumnos que participan en los programas de preincubación e incubación.
 
 El sistema permitirá, de forma progresiva:
