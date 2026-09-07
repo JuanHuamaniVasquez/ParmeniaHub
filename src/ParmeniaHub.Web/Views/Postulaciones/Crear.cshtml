@@ -1,0 +1,11 @@
+@model ParmeniaHub.Web.ViewModels.Postulaciones.CrearPostulacionViewModel
+@{ ViewData["Title"] = "Nueva postulación"; }
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card"><div class="card-header"><h4>Nueva postulación</h4><p class="text-muted mb-0">Registra los datos iniciales del proyecto.</p></div><div class="card-body">
+<form asp-action="Crear" method="post"><div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3"><label asp-for="NombreProyecto" class="form-label"></label><input asp-for="NombreProyecto" class="form-control"/><span asp-validation-for="NombreProyecto" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="NombrePostulante" class="form-label"></label><input asp-for="NombrePostulante" class="form-control"/></div>
+<div class="mb-3"><label asp-for="Correo" class="form-label"></label><input asp-for="Correo" class="form-control"/></div>
+<div class="mb-3"><label asp-for="EtapaDeseada" class="form-label"></label><select asp-for="EtapaDeseada" asp-items="Html.GetEnumSelectList<ParmeniaHub.Domain.Convocatorias.TipoPrograma>()" class="form-select"></select></div>
+<button class="btn btn-primary">Registrar</button> <a asp-action="Index" class="btn btn-light">Cancelar</a></form>
+</div></div></div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

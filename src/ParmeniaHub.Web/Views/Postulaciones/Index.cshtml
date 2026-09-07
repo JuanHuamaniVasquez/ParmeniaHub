@@ -1,0 +1,14 @@
+@model IReadOnlyList<ParmeniaHub.Application.Postulaciones.PostulacionDto>
+@{ ViewData["Title"] = "Postulaciones"; }
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div><h4 class="mb-1">Seguimiento de postulaciones</h4><p class="text-muted mb-0">Función stateful: cada cambio queda guardado.</p></div>
+    <a asp-action="Crear" class="btn btn-primary">+ Nueva postulación</a>
+  </div>
+  <div class="card-body px-0">
+    @if (Model.Count == 0) { <div class="alert alert-info mx-4">No hay postulaciones registradas.</div> }
+    else { <div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Proyecto</th><th>Postulante</th><th>Etapa</th><th>Estado</th><th></th></tr></thead><tbody>
+    @foreach (var item in Model) { <tr><td>@item.NombreProyecto</td><td>@item.NombrePostulante</td><td>@item.EtapaDeseada</td><td><span class="badge bg-primary-subtle text-primary">@item.Estado</span></td><td><a asp-action="Detalle" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Ver</a></td></tr> }
+    </tbody></table></div> }
+  </div>
+</div>

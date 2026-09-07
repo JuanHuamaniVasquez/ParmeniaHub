@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ParmeniaHub.Application.Convocatorias;
+using ParmeniaHub.Application.Entregables;
+using ParmeniaHub.Application.Postulaciones;
 using ParmeniaHub.Infrastructure.Persistence;
 using ParmeniaHub.Infrastructure.Persistence.Repositories;
 
@@ -21,6 +23,8 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         services.AddScoped<IConvocatoriaRepository, ConvocatoriaRepository>();
+        services.AddScoped<IPostulacionRepository, PostulacionRepository>();
+        services.AddScoped<IEntregableRepository, EntregableRepository>();
 
         return services;
     }

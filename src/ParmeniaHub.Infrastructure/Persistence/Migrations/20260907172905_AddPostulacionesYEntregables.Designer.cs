@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ParmeniaHub.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using ParmeniaHub.Infrastructure.Persistence;
 namespace ParmeniaHub.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260907172905_AddPostulacionesYEntregables")]
+    partial class AddPostulacionesYEntregables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,74 +143,6 @@ namespace ParmeniaHub.Infrastructure.Persistence.Migrations
                     b.ToTable("entregables", (string)null);
                 });
 
-            modelBuilder.Entity("ParmeniaHub.Domain.Entregables.RevisionEntregable", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Comentarios")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
-                        .HasColumnName("comentarios");
-
-                    b.Property<Guid>("EntregableId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("entregable_id");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
-                        .HasColumnName("estado");
-
-                    b.Property<DateTimeOffset>("Fecha")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("fecha");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntregableId");
-
-                    b.ToTable("revisiones_entregables", (string)null);
-                });
-
-            modelBuilder.Entity("ParmeniaHub.Domain.Postulaciones.CambioEstadoPostulacion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
-                        .HasColumnName("estado");
-
-                    b.Property<DateTimeOffset>("Fecha")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("fecha");
-
-                    b.Property<string>("Observaciones")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
-                        .HasColumnName("observaciones");
-
-                    b.Property<Guid>("PostulacionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("postulacion_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostulacionId");
-
-                    b.ToTable("historial_postulaciones", (string)null);
-                });
-
             modelBuilder.Entity("ParmeniaHub.Domain.Postulaciones.Postulacion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -271,34 +206,6 @@ namespace ParmeniaHub.Infrastructure.Persistence.Migrations
                         .HasForeignKey("PostulacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ParmeniaHub.Domain.Entregables.RevisionEntregable", b =>
-                {
-                    b.HasOne("ParmeniaHub.Domain.Entregables.Entregable", null)
-                        .WithMany("Revisiones")
-                        .HasForeignKey("EntregableId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ParmeniaHub.Domain.Postulaciones.CambioEstadoPostulacion", b =>
-                {
-                    b.HasOne("ParmeniaHub.Domain.Postulaciones.Postulacion", null)
-                        .WithMany("Historial")
-                        .HasForeignKey("PostulacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ParmeniaHub.Domain.Entregables.Entregable", b =>
-                {
-                    b.Navigation("Revisiones");
-                });
-
-            modelBuilder.Entity("ParmeniaHub.Domain.Postulaciones.Postulacion", b =>
-                {
-                    b.Navigation("Historial");
                 });
 #pragma warning restore 612, 618
         }

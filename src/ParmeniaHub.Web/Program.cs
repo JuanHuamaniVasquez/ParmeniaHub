@@ -3,6 +3,9 @@ using ParmeniaHub.Application.Convocatorias.Crear;
 using ParmeniaHub.Application.Convocatorias.Listar;
 using ParmeniaHub.Application.Convocatorias.Obtener;
 using ParmeniaHub.Application.Convocatorias.Publicar;
+using ParmeniaHub.Application.Entregables;
+using ParmeniaHub.Application.Herramientas;
+using ParmeniaHub.Application.Postulaciones;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,16 @@ builder.Services.AddScoped<CrearConvocatoriaService>();
 builder.Services.AddScoped<ListarConvocatoriasService>();
 builder.Services.AddScoped<ObtenerConvocatoriaService>();
 builder.Services.AddScoped<PublicarConvocatoriaService>();
+builder.Services.AddScoped<CrearPostulacionService>();
+builder.Services.AddScoped<ListarPostulacionesService>();
+builder.Services.AddScoped<ObtenerPostulacionService>();
+builder.Services.AddScoped<AvanzarPostulacionService>();
+builder.Services.AddScoped<CrearEntregableService>();
+builder.Services.AddScoped<ListarEntregablesService>();
+builder.Services.AddScoped<ListarEntregablesPorPostulacionService>();
+builder.Services.AddScoped<CambiarEstadoEntregableService>();
+builder.Services.AddScoped<EvaluarAvancePostulacionService>();
+builder.Services.AddScoped<CalcularProgresoProyectoService>();
 
 var app = builder.Build();
 

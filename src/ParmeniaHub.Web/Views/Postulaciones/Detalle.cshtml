@@ -1,0 +1,67 @@
+@model ParmeniaHub.Web.ViewModels.Postulaciones.DetallePostulacionViewModel
+@using ParmeniaHub.Domain.Postulaciones
+@{ ViewData["Title"] = "Detalle de postulación"; var p = Model.Postulacion; }
+
+<div class="row g-3">
+    <div class="col-lg-7"><div class="card h-100"><div class="card-header"><h4>@p.NombreProyecto</h4></div><div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Postulante</dt><dd class="col-sm-8">@p.NombrePostulante</dd>
+            <dt class="col-sm-4">Correo</dt><dd class="col-sm-8">@p.Correo</dd>
+            <dt class="col-sm-4">Etapa</dt><dd class="col-sm-8">@p.EtapaDeseada</dd>
+            <dt class="col-sm-4">Estado actual</dt><dd class="col-sm-8"><span class="badge bg-primary">@p.Estado</span></dd>
+            <dt class="col-sm-4">Observaciones</dt><dd class="col-sm-8">@(string.IsNullOrEmpty(p.Observaciones) ? "Sin observaciones" : p.Observaciones)</dd>
+        </dl><a asp-action="Index" class="btn btn-light">Volver</a>
+    </div></div></div>
+
+    <div class="col-lg-5"><div class="card h-100"><div class="card-header"><h5>Progreso del proyecto</h5><p class="text-muted mb-0">Calculado con los entregables actuales.</p></div><div class="card-body">
+        <div class="d-flex justify-content-between mb-2"><strong>@Model.Progreso.Nivel</strong><strong>@Model.Progreso.Porcentaje %</strong></div>
+        <div class="progress mb-3" style="height: 12px"><div class="progress-bar" style="width: @Model.Progreso.Porcentaje%"></div></div>
+        <p class="mb-1">@Model.Progreso.EntregablesAprobados de @Model.Progreso.TotalEntregables entregables aprobados.</p>
+        <p class="text-muted">@Model.Progreso.SiguienteAccion</p>
+        <a asp-controller="Entregables" asp-action="Crear" class="btn btn-outline-primary btn-sm">Agregar entregable</a>
+        <p class="small text-muted mt-3 mb-0">El resultado no se guarda; se calcula nuevamente al abrir esta página.</p>
+    </div></div></div>
+</div>
+
+<div class="row g-3 mt-1">
+    <div class="col-lg-7"><div class="card"><div class="card-header"><h5>Evaluar si puede avanzar</h5><p class="text-muted mb-0">La evaluación orienta al encargado, pero no cambia el estado.</p></div><div class="card-body">
+        @if (p.Estado == EstadoPostulacion.EnProceso)
+        { <div class="alert alert-info mb-0">La postulación ya se encuentra en proceso.</div> }
+        else
+        {
+            <form asp-action="EvaluarAvance" method="post">
+                <input type="hidden" name="id" value="@p.Id" />
+                <div class="form-check mb-2"><input asp-for="DatosCompletos" class="form-check-input" /><label asp-for="DatosCompletos" class="form-check-label">Los datos de la postulación están completos</label></div>
+                @if (p.Estado == EstadoPostulacion.PrimeraSesion)
+                {
+                    <div class="form-check mb-2"><input asp-for="AsistioPrimeraSesion" class="form-check-input" /><label asp-for="AsistioPrimeraSesion" class="form-check-label">Asistió a la primera sesión</label></div>
+                    <div class="form-check mb-2"><input asp-for="IdeaViable" class="form-check-input" /><label asp-for="IdeaViable" class="form-check-label">La idea fue considerada viable</label></div>
+                    <div class="form-check mb-2"><input asp-for="EncargadoAprobo" class="form-check-input" /><label asp-for="EncargadoAprobo" class="form-check-label">El encargado aprobó la continuación</label></div>
+                }
+                <button class="btn btn-outline-primary mt-2">Evaluar</button>
+            </form>
+            @if (Model.Evaluacion is not null)
+            {
+                <div class="alert @(Model.Evaluacion.PuedeAvanzar ? "alert-success" : "alert-warning") mt-3 mb-0">
+                    <strong>@Model.Evaluacion.Mensaje</strong>
+                    @if (Model.Evaluacion.RequisitosPendientes.Count > 0)
+                    { <ul class="mb-0 mt-2">@foreach (var requisito in Model.Evaluacion.RequisitosPendientes) { <li>@requisito</li> }</ul> }
+                </div>
+            }
+        }
+        <p class="small text-muted mt-3 mb-0">Las respuestas y el resultado no se guardan.</p>
+    </div></div></div>
+
+    <div class="col-lg-5"><div class="card"><div class="card-header"><h5>Avanzar estado</h5></div><div class="card-body">
+        <form asp-action="Avanzar" method="post"><input type="hidden" name="id" value="@p.Id" /><label class="form-label">Observaciones</label><textarea name="observaciones" class="form-control mb-3" rows="4"></textarea><button class="btn btn-primary" @(p.Estado == EstadoPostulacion.EnProceso ? "disabled" : null)>Confirmar cambio de estado</button></form>
+    </div></div></div>
+</div>
+
+<div class="card mt-3"><div class="card-header"><h5>Entregables del proyecto</h5></div><div class="card-body">
+    @if (Model.Entregables.Count == 0) { <p class="text-muted mb-0">Este proyecto todavía no tiene entregables.</p> }
+    else { <div class="table-responsive"><table class="table"><thead><tr><th>Entregable</th><th>Estado</th><th>Comentario</th></tr></thead><tbody>@foreach (var item in Model.Entregables) { <tr><td>@item.Nombre</td><td>@item.Estado</td><td>@item.Comentarios</td></tr> }</tbody></table></div> }
+</div></div>
+
+<div class="card mt-3"><div class="card-header"><h5>Historial de estados</h5></div><div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Fecha</th><th>Estado</th><th>Observaciones</th></tr></thead><tbody>
+@foreach (var cambio in p.Historial) { <tr><td>@cambio.Fecha.ToOffset(TimeSpan.FromHours(-5)).ToString("dd/MM/yyyy HH:mm")</td><td>@cambio.Estado</td><td>@cambio.Observaciones</td></tr> }
+</tbody></table></div></div></div>
