@@ -17,7 +17,104 @@ El sistema permitirá, de forma progresiva:
 - Facilitar la comunicación entre alumnos y el encargado.
 - Tener un chat grupal para cada proyecto.
 
-Actualmente, el proyecto cuenta con la gestión inicial de convocatorias. Las demás funciones se agregarán poco a poco.
+Actualmente, el proyecto permite gestionar convocatorias, postulaciones y entregables.
+
+## Funciones stateful y stateless
+
+Esta tarea agrega dos funciones **stateful** y dos funciones **stateless**.
+
+Una función **stateful** guarda información para recordar lo que ocurrió anteriormente. Una función **stateless** analiza la información que recibe y muestra un resultado, pero no guarda ese resultado.
+
+### Funciones stateful
+
+#### 1. Seguimiento de postulaciones
+
+Permite registrar una postulación y avanzar por los siguientes estados:
+
+`Inscripción → Primera sesión → Aceptada → En proceso`
+
+Cada cambio guarda:
+
+- El nuevo estado.
+- La fecha del cambio.
+- Las observaciones del encargado.
+- El historial completo de la postulación.
+
+![Seguimiento de postulaciones](image-1.png)
+
+Es stateful porque la aplicación debe recordar el estado actual y todos los cambios anteriores.
+
+#### 2. Seguimiento de entregables
+
+Permite crear entregables para una postulación y cambiar su estado:
+
+`Pendiente → Enviado → En revisión → Requiere cambios o Aprobado`
+
+Cada revisión guarda:
+
+- El estado del entregable.
+- Los comentarios del encargado.
+- La fecha de la revisión.
+- El historial de revisiones.
+
+![crear entregables para una postulación](image-2.png)
+![Seguimiento de entregables](image-3.png)
+
+Es stateful porque los estados y comentarios permanecen guardados en PostgreSQL.
+
+### Funciones stateless
+
+#### 3. Evaluación para avanzar una postulación
+
+Esta función ayuda al encargado a revisar si una postulación está lista para avanzar. Dependiendo de su estado, comprueba datos como:
+
+- Que la información esté completa.
+- Que el alumno haya asistido a la primera sesión.
+- Que la idea sea viable.
+- Que el encargado haya aprobado la continuación.
+
+![Evaluación para avanzar una postulación](image-4.png)
+
+La función indica si la postulación puede avanzar y muestra lo que falta. No cambia el estado automáticamente ni guarda las respuestas de la evaluación.
+
+Es stateless porque solamente analiza las respuestas y muestra un resultado temporal. El encargado sigue siendo quien confirma el cambio de estado.
+
+#### 4. Progreso automático del proyecto
+
+Esta función calcula el progreso usando los entregables reales de la postulación. Cada estado tiene un valor:
+
+| Estado del entregable | Avance |
+| --------------------- | -----: |
+| Pendiente             |    0 % |
+| Enviado               |   40 % |
+| Requiere cambios      |   50 % |
+| En revisión           |   60 % |
+| Aprobado              |  100 % |
+
+La aplicación muestra:
+
+- El porcentaje general.
+- El nivel de progreso.
+- La cantidad de entregables aprobados.
+- La siguiente acción recomendada.
+
+![Progreso automático del proyecto](image-5.png)
+
+Es stateless porque el porcentaje no se guarda. Se vuelve a calcular cada vez que se abre el detalle de la postulación.
+
+### Relación entre las funciones
+
+Las funciones stateful guardan los estados y los historiales. Las funciones stateless utilizan esa información para orientar al encargado y mostrar el progreso, sin crear datos adicionales.
+
+```text
+Postulación y entregables guardados
+                ↓
+Evaluación y cálculo temporal
+                ↓
+El encargado toma una decisión
+                ↓
+El cambio confirmado se guarda
+```
 
 ## Arquitectura de n capas
 
